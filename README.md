@@ -1,4 +1,4 @@
-# gate-inc-interns
+# Gate-Inc-Intern Project 1
 building up management system for hospital
 We have been given a task to build a hospital management
 That will enable patient/doctor interaction easier by booking appointment with 

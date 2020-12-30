@@ -1,0 +1,10 @@
+body{
+    background-image: url(h1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+table{
+    background-color: rgb(16, 223, 223);
+    border-style: inherit;
+    border-radius: 2px;
+}

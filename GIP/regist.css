@@ -1,0 +1,81 @@
+body {
+    background-color: transparent;
+}
+
+nav {
+    background-color: dodgerblue;
+    padding-top: 25px;
+    padding-bottom: 40px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+p {
+    color: red;
+}
+
+a {
+    float: right;
+}
+
+a#home {
+    background-color: blue;
+    color: white;
+    align-content: space-between;
+    font-size: 25px;
+    list-style-type: none;
+    text-decoration: none;
+    border-style: double;
+    border-radius: 10px;
+}
+
+a#register:hover {
+    border-color: white;
+    background-color: black;
+}
+
+a#contact:hover {
+    background-color: black;
+    border-color: white;
+}
+
+a#contact {
+    background-color: blue;
+    color: white;
+    align-content: space-between;
+    font-size: 25px;
+    list-style-type: none;
+    text-decoration: none;
+    border-style: double;
+    border-radius: 10px;
+}
+
+a#home:hover {
+    border-color: white;
+    background-color: black;
+}
+
+a#register {
+    background-color: blue;
+    color: white;
+    align-content: space-between;
+    font-size: 25px;
+    list-style-type: none;
+    text-decoration: none;
+    border-style: double;
+    border-radius: 10px;
+}
+
+input {
+    height: 20px;
+    width: 240px;
+}
+
+form {
+    padding-top: 50px;
+}
+
+select {
+    height: 20px;
+    width: 240px;
+}
