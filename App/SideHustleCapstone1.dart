@@ -11,7 +11,7 @@ void grade(){
 
     print("Enter score: ");
     int? score = int.parse(stdin.readLineSync()!);
-    if (score >= 80) {
+    if (score >= 80 && score <= 100) {
         print("Your Score for ${subject} is A");
     } 
     else if (score >=60 && score <= 79) {
