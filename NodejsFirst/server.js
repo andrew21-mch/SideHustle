@@ -57,6 +57,9 @@ router.get('/sys', (req, res)=>{
         `);
 });
 
+router.get('*', function(req, res){
+  res.sendFile(path.join(__dirname+'/pages/404.html'));
+});
 
 
 //add the router
