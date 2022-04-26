@@ -7,9 +7,12 @@ const port = 5000;
 
 const server = http.createServer((req, res) => {
 	let htmlFile = '';
-    if(req.url == '/')
-			htmlFile = 'pages/index.html';
+    if(req.url == '/'){
+        res.statusCode = 200;    
+		htmlFile = 'pages/index.html';
+    }
 	else if(req.url == '/about'){
+        res.statusCode = 200; 
         htmlFile = 'pages/about.html';
     }
     else if(req.url == '/sys'){
@@ -54,6 +57,7 @@ const server = http.createServer((req, res) => {
 
     }
     else{
+        res.statusCode = 200; 
         htmlFile = 'pages/404.html';
     }
 			
