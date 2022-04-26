@@ -1,25 +1,21 @@
-const express = require('express');
-const os = require('os');
+const http = require('http');
 const fs = require('fs');
-const server = express();
-const path = require('path');
-const router = express.Router();
+const os = require('os')
 const osin = require('./osinfo.json')
-
-const host = "127.0.0.1";
+const hostname = '127.0.0.1';
 const port = 5000;
-router.get('/',(req,res)=>{
-  res.sendFile(path.join(__dirname+'/pages/index.html'));
-  //__dirname : It will resolve to your project folder.
-});
 
-router.get('/about',(req,res)=>{
-  res.sendFile(path.join(__dirname+'/pages/about.html'));
-});
-
-router.get('/sys', (req, res)=>{
-    res.statusCode = 200;
-    let json = JSON.stringify({
+const server = http.createServer((req, res) => {
+	let htmlFile = '';
+    if(req.url == '/')
+			htmlFile = 'pages/index.html';
+	else if(req.url == '/about'){
+        htmlFile = 'pages/about.html';
+    }
+    else if(req.url == '/sys'){
+        
+        res.statusCode = 200;
+        var json = JSON.stringify({
         'hostname': os.hostname(),
         'platform': os.platform(),
         'architechure': os.arch(),
@@ -28,39 +24,59 @@ router.get('/sys', (req, res)=>{
         'uptime': os.uptime(),
 
     });
-    //write into osin
-    fs.writeFile('./osinfo.json', json, (err)=>{
-        if(err) throw err;
-        console.log('The file has been saved!');
-    });
+        fs.writeFile('./osinfo.json', json, (err)=>{
+            if(err) throw err;
+            console.log('The file has been saved!');
+        });
+        
+            res.end(`System Information:\n
+            =============================================
+            Hostname: ${osin.hostname},
+            Platform: ${osin.platform},
+            Arhcitecture: ${osin.architechure},
+            numberOfCPUS: ${osin.numberOfCPUs},
+            NetworkInterfaces: ${osin.networkInterfaces},
+            Uptime: ${osin.uptime}
+            =============================================
+            `);
     
-        res.end(`System Information:\n
-        =============================================
-        Hostname: ${osin.hostname},
-        Platform: ${osin.platform},
-        Arhcitecture: ${osin.architechure},
-        numberOfCPUS: ${osin.numberOfCPUs},
-        NetworkInterfaces: ${osin.networkInterfaces},
-        Uptime: ${osin.uptime}
-        =============================================
-        `);
+            console.log(`
+            =============================================
+            Hostname: ${osin.hostname},
+            Platform: ${osin.platform},
+            Arhcitecture: ${osin.architechure},
+            numberOfCPUS: ${osin.numberOfCPUs},
+            NetworkInterfaces: ${osin.networkInterfaces},
+            Uptime: ${osin.uptime}
+            ==============================================
+            `);
 
-        console.log(`System Information:\n
-        =============================================
-        Hostname: ${osin.hostname},
-        Platform: ${osin.platform},
-        Arhcitecture: ${osin.architechure},
-        numberOfCPUS: ${osin.numberOfCPUs.stringify},
-        NetworkInterfaces: ${osin.stringnify(networkInterfaces)},
-        Uptime: ${osin.uptime}
-        =============================================
-        `);
+
+    }
+    else{
+        htmlFile = 'pages/404.html';
+    }
+			
+
+	if(htmlFile)
+		render(res, htmlFile);
 });
 
+function render(res, htmlFile) {
+  	fs.stat(`./${htmlFile}`, (err, stats) => {
+		res.statusCode = 200;
+		res.setHeader('Content-Type', 'text/html');
+  		if(stats) {
+		  	fs.createReadStream(htmlFile).pipe(res);
+  		} else {
+  			res.statusCode = 404;
+            render(res, htmlFile)
+  			res.end();
+  		}
+  	});
+}
 
-
-//add the router
-server.use('/', router);
-server.listen(port, host, (res)=>{
-    console.log(`Server listerning at http://${host}:${port}`);
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
 });
+
