@@ -1,24 +1,21 @@
 const http = require('http');
 const fs = require('fs');
 const os = require('os')
-
+const osin = require('./osinfo.json')
 const hostname = '127.0.0.1';
 const port = 5000;
 
 const server = http.createServer((req, res) => {
 	let htmlFile = '';
-    if(req.url == '/'){
-        res.statusCode = 200;    
-		htmlFile = 'pages/index.html';
-    }
+    if(req.url == '/')
+			htmlFile = 'pages/index.html';
 	else if(req.url == '/about'){
-        res.statusCode = 200; 
         htmlFile = 'pages/about.html';
     }
     else if(req.url == '/sys'){
         
         res.statusCode = 200;
-        let json = JSON.stringify({
+        var json = JSON.stringify({
         'hostname': os.hostname(),
         'platform': os.platform(),
         'architechure': os.arch(),
@@ -34,30 +31,29 @@ const server = http.createServer((req, res) => {
         
             res.end(`System Information:\n
             =============================================
-            Hostname: ${json.hostname},
-            Platform: ${json.platform},
-            Arhcitecture: ${json.architechure},
-            numberOfCPUS: ${json.numberOfCPUs},
-            NetworkInterfaces: ${json.networkInterfaces},
-            Uptime: ${json.uptime}
+            Hostname: ${osin.hostname},
+            Platform: ${osin.platform},
+            Arhcitecture: ${osin.architechure},
+            numberOfCPUS: ${osin.numberOfCPUs},
+            NetworkInterfaces: ${osin.networkInterfaces},
+            Uptime: ${osin.uptime}
             =============================================
             `);
     
-            console.log(`System Information:\n
+            console.log(`
             =============================================
-            Hostname: ${json.hostname},
-            Platform: ${json.platform},
-            Arhcitecture: ${json.architechure},
-            numberOfCPUS: ${json.numberOfCPUs.stringify},
-            NetworkInterfaces: ${json.stringnify(networkInterfaces)},
-            Uptime: ${json.uptime}
-            =============================================
+            Hostname: ${osin.hostname},
+            Platform: ${osin.platform},
+            Arhcitecture: ${osin.architechure},
+            numberOfCPUS: ${osin.numberOfCPUs},
+            NetworkInterfaces: ${osin.networkInterfaces},
+            Uptime: ${osin.uptime}
+            ==============================================
             `);
 
 
     }
     else{
-        res.statusCode = 200; 
         htmlFile = 'pages/404.html';
     }
 			
